@@ -1,6 +1,6 @@
 # ssm_mass_uploader
 
-Upload multiple screts to AWS SSM Parameter store from single file
+Upload multiple screts to AWS SSM Parameter store from single file. Essentially you just add json objects to the 'secrets' array in the secrets_to_upload.json
 
 ## Usage
 
