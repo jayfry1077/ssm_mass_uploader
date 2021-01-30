@@ -1,6 +1,6 @@
 # ssm_mass_uploader
 
-Upload to SSM from single file
+Upload multiple screts to AWS SSM Parameter store from single file
 
 ## json to put in 'secrets_to_upload'
 
@@ -31,7 +31,7 @@ Note: Tags are not required, but if you do include them, then the key values are
 
 ## secrets_to_upload
 
-### Basic Example
+### Basic Examples
 
 ```json
 {
@@ -40,6 +40,18 @@ Note: Tags are not required, but if you do include them, then the key values are
       "Name": "/this/is/super/secret",
       "Value": "shhhh",
       "Type": "String"
+    }
+  ]
+}
+```
+
+```json
+{
+  "secrets": [
+    {
+      "Name": "/this/is/super/secret",
+      "Value": "shhhh",
+      "Type": "SecureString"
     }
   ]
 }
