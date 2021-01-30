@@ -9,6 +9,8 @@ def main():
     try:
         for secret in secrets['secrets']:
             ssm.put_parameter(secret)
+
+        print('Secrets Uploaded.')
     except Exception as e:
         print(e)
 
