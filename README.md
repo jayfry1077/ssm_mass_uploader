@@ -11,7 +11,9 @@ For parameter options see boto 3 put parameter docs
 #### Windows
 
 aws kms encrypt --key-id {kms_id_id} --plaintext fileb://{file_to_encrypt} --query CiphertextBlob > encrypted_file.base64
+
 go into the file and remove the quotes
+
 certutil -decode encrypted_file.base64 encrypted_file
 
 Note: The base64 data is base64 of your encrypted data, not your actual data.
@@ -28,7 +30,7 @@ aws kms encrypt --key-id {kms_id_id} --plaintext fileb://{file_to_encrypt} --que
 --r region
 
 ```
-example 1: python3 ssm_mass_uploader-main/upload_ssm.py -k $kms_id -f encrypted_file
+example 1: python3 -m ssmu -k $kms_id -f encrypted_file
 ```
 
 ---
@@ -61,8 +63,6 @@ Note: Tags are not required, but if you do include them, then the key values are
 ---
 
 ## Examples
-
-![Example Secrets](example_secrets.png)
 
 ### Basic Examples
 

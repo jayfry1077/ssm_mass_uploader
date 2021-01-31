@@ -23,3 +23,16 @@ class KMS:
 
         except ClientError as e:
             raise Exception(e)
+
+    def encrypt_file(self):
+
+        try:
+            response = self.kms.encrypt(
+                KeyId=self.keyid,
+                Plaintext=self.file,
+            )
+
+            print(response)
+
+        except:
+            pass
