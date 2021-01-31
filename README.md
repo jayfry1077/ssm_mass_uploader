@@ -4,22 +4,31 @@ Upload multiple screts to AWS SSM Parameter store from single file. Essentially 
 
 ## Usage
 
+For parameter options see boto 3 put parameter docs
+
+### Encrypting the file locally
+
+#### Windows
+
+aws kms encrypt --key-id {kms_id_id} --plaintext fileb://{file_to_encrypt} --query CiphertextBlob > encrypted_file.base64
+go into the file and remove the quotes
+certutil -decode encrypted_file.base64 encrypted_file
+
+Note: The base64 data is base64 of your encrypted data, not your actual data.
+
+#### Linux/Mac
+
+aws kms encrypt --key-id {kms_id_id} --plaintext fileb://{file_to_encrypt} --query CiphertextBlob | base64 --decode > encrypted_file
+
 ### Example:
 
-By Default the profile is 'default' and region is 'us-east-1'
+-f file path
+-k kms_id
+--p aws profile
+--r region
 
 ```
-example 1: python upload_ssm.py --r us-east-1 --p default
-```
-
-```
-example 2: python upload_ssm.py
-```
-
-**example 1** and **example 2** do the same thing.
-
-```
-example 3: python upload_ssm.py --r us-west-1 --p some_other_profile_name_in_aws_credentials_file
+example 1: python3 ssm_mass_uploader-main/upload_ssm.py -k $kms_id -f encrypted_file
 ```
 
 ---
