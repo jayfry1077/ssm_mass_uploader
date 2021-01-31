@@ -1,37 +1,37 @@
 # ssm_mass_uploader
 
-Upload multiple screts to AWS SSM Parameter store from single file. Essentially you just add json objects to the 'secrets' array in the secrets_to_upload.json
+Command line tool that will encrypt ssm secrets locally via AWS KMS and uploads encrypted data to ssm.
 
-## Usage
+## How to use
 
-For parameter options see boto 3 put parameter docs
+1. You create a secrets file on your local machine. Example.
 
-### Encrypting the file locally
-
-#### Windows
-
-aws kms encrypt --key-id {kms_id_id} --plaintext fileb://{file_to_encrypt} --query CiphertextBlob > encrypted_file.base64
-
-go into the file and remove the quotes
-
-certutil -decode encrypted_file.base64 encrypted_file
-
-Note: The base64 data is base64 of your encrypted data, not your actual data.
-
-#### Linux/Mac
-
-aws kms encrypt --key-id {kms_id_id} --plaintext fileb://{file_to_encrypt} --query CiphertextBlob | base64 --decode > encrypted_file
-
-### Example:
-
--f file path
--k kms_id
---p aws profile
---r region
-
+```json
+{
+  "secrets": [
+    {
+      "Name": "/super/secret/parameter",
+      "Value": "42",
+      "Type": "SecureString",
+      "Overwrite": true
+    }
+  ]
+}
 ```
-example 1: python3 -m ssmu -k $kms_id -f encrypted_file
-```
+
+For parameter options see [boto 3 put parameter docs](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ssm.html#SSM.Client.put_parameter)
+
+1. Encrypting the file locally
+
+python -m ssmu -e -k {kms_id} -f path/to/file/{unencrypted_file.json} -s {stage} --o path/to/save
+
+will output a file named secret.{stage}
+
+1. Upload the encrypted file to ssm
+
+python -m ssmu -u -k {kms_id} -f path/to/file/secret.stage -s stage
+
+Note: Windows and linux \ vs /
 
 ---
 
