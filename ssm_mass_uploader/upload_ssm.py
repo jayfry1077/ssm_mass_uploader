@@ -1,5 +1,5 @@
-from aws_utils.ssm import SSM
-from aws_utils.kms import KMS
+from .aws_utils.ssm import SSM
+from .aws_utils.kms import KMS
 import argparse
 import json
 
@@ -9,7 +9,7 @@ parser.add_argument('--profile', '--p', type=str, default='default',
                     help='Name of profile in your aws credentails file. Default is "default"')
 parser.add_argument('--region', '--r', type=str, default='us-east-1',
                     help='Region you want your ssm credentials uploaded to. Default is us-east-1')
-parser.add_argument('-file', '-f', type=str, default='encrypted_file',
+parser.add_argument('-file', '-f', type=str, default='secret.sandbox',
                     help='File that contains encrypted secrets.')
 parser.add_argument('-stage', '-s', type=str, default='dev',
                     help='Stage')
