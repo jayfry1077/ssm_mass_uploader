@@ -11,15 +11,17 @@ parser.add_argument('--region', '--r', type=str, default='us-east-1',
                     help='Region you want your ssm credentials uploaded to. Default is us-east-1')
 parser.add_argument('-file', '-f', type=str, default='encrypted_file',
                     help='File that contains encrypted secrets.')
+parser.add_argument('-stage', '-s', type=str, default='dev',
+                    help='Stage')
 
 args = parser.parse_args()
 
 
-def main(profile, region, keyid, file):
+def main(profile, region, keyid, file, stage):
 
     file_bytes = open(file, 'rb')
     decrypt = KMS(profile, region, keyid, file_bytes)
-    ssm_upload = SSM(profile, region)
+    ssm_upload = SSM(profile, region, stage)
     secrets = json.loads(decrypt.decrypt_file())['secrets']
 
     try:
@@ -32,4 +34,4 @@ def main(profile, region, keyid, file):
 
 
 if __name__ == '__main__':
-    main(args.profile, args.region, args.keyid, args.file)
+    main(args.profile, args.region, args.keyid, args.file, args.stage)
