@@ -18,15 +18,16 @@ parser.add_argument('-file', '-f', type=str, default='secret.sandbox',
                     help='File that contains encrypted secrets.')
 parser.add_argument('-stage', '-s', type=str, default='dev',
                     help='Stage')
+parser.add_argument('--output', '--o', type=str, default='.',
+                    help='Stage')
 
 args = parser.parse_args()
 
 if __name__ == '__main__':
 
     if args.upload:
-        upload(args.profile, args.region,
-               args.keyid, args.file, args.stage)
+        upload(args.profile, args.region, args.keyid, args.file, args.stage)
 
     if args.encrypt:
-        # do stuff
-        pass
+        encrypt_data(args.profile, args.region, args.keyid,
+                     args.file, args.stage, args.output)

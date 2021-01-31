@@ -32,7 +32,7 @@ class KMS:
                 Plaintext=self.file,
             )
 
-            print(response)
+            return response['CiphertextBlob']
 
-        except:
-            pass
+        except ClientError as e:
+            raise Exception(e)
