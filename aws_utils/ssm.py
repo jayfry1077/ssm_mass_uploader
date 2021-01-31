@@ -12,9 +12,19 @@ class SSM:
     def put_parameter(self, secret):
 
         try:
-            secret_with_stage = {k: v.format(
-                STAGE=self.stage) for (k, v) in secret.items()}
-            self.ssm.put_parameter(**secret_with_stage)
+            self.ssm.put_parameter(**self.__add_stage(secret))
 
         except ClientError as e:
             raise Exception(e)
+
+    def __add_stage(self, secret):
+        staged_secret = {}
+
+        # if you can figure out how to do this with dict comprehension let me know :)
+        for k, v in secret.items():
+            if type(v) == str:
+                staged_secret.update({k: v.format(STAGE=self.stage)})
+            else:
+                staged_secret.update({k: v})
+
+        return staged_secret
